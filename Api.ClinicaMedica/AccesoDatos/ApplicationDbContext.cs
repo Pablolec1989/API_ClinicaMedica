@@ -16,6 +16,8 @@ namespace Api.ClinicaMedica.AccesoDatos
         public DbSet<Turnos> Turnos { get; set; }
         public DbSet<Roles> Roles { get; set; }
 
+        public DbSet<ServiciosDTO> Servicios { get; set; }
+
         public DbSet<Usuarios> Usuarios { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -210,6 +212,26 @@ namespace Api.ClinicaMedica.AccesoDatos
                 new Roles { IdRol = 2, Nombre = "Médico" },
                 new Roles { IdRol = 3, Nombre = "Paciente" }
             );
+
+            modelBuilder.Entity<ServiciosDTO>(entity =>
+            {
+                entity.HasKey(s => s.IdServicio);
+                entity.Property(s => s.IdServicio)
+                      .HasMaxLength(100)
+                      .IsRequired();
+
+                entity.Property(s => s.Nombre)
+                      .IsRequired()
+                      .HasMaxLength(100); 
+
+                entity.Property(s => s.Descripcion)
+                      .HasMaxLength(700); 
+
+                entity.Property(s => s.Precio)
+                      .HasColumnType("decimal(18,2)")
+                      .IsRequired();
+            });
+
         });
 
         }
