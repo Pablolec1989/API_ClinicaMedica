@@ -35,14 +35,14 @@ builder.Services.AddAutoMapper(typeof(Program));
 // Configurar CORS
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll", builder => // Desarrollo
+    options.AddPolicy("AllowAll", builder =>
     {
         builder.AllowAnyOrigin()
                .AllowAnyMethod()
                .AllowAnyHeader();
     });
 
-    options.AddPolicy("AllowVercel", builder => // Producción
+    options.AddPolicy("AllowVercel", builder =>
     {
         builder.WithOrigins("https://turno-facil.vercel.app")
                .AllowAnyMethod()
@@ -85,7 +85,24 @@ app.UseHttpsRedirection();
 app.UseRouting();
 
 // Configuración CORS
-app.UseCors(app.Environment.IsDevelopment() ? "AllowAll" : "AllowVercel");
+//app.UseCors(app.Environment.IsDevelopment() ? "AllowAll" : "AllowVercel");
+
+app.UseCors("AllowAll");  // Asegúrate de que esta línea se ejecuta
+
+app.Use(async (context, next) =>
+{
+    context.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+    context.Response.Headers.Add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+    context.Response.Headers.Add("Access-Control-Allow-Headers", "Content-Type, Authorization");
+
+    if (context.Request.Method == "OPTIONS")
+    {
+        context.Response.StatusCode = 200;
+        return;
+    }
+
+    await next();
+});
 
 // Middleware de autenticación y autorización
 app.UseAuthentication();  // Se agrega el middleware de autenticación

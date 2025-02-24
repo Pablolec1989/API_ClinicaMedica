@@ -236,8 +236,8 @@ namespace Api.ClinicaMedica.AccesoDatos
 
                 entity.HasOne(c => c.Medico)
                       .WithMany()
-                      .HasForeignKey(c => c.IdMedico)
-                      .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey(c => c.IdMedico)
+                        .OnDelete(DeleteBehavior.SetNull);
 
                 entity.HasOne(c => c.Servicio)
                       .WithMany()
