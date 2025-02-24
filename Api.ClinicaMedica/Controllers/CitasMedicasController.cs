@@ -29,7 +29,7 @@ namespace Api.ClinicaMedica.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CitasMedicas>>> GetCitasMedicas()
         {
-            return await _context.CitasMedicas.Include(c => c.Paciente).Include(c => c.Medico).Include(c => c.Servicio)
+            return await _context.CitasMedicas.Include(c => c.Paciente)
                                 .Include(c => c.DetallesServicios).ToListAsync();
         }
 
@@ -37,7 +37,7 @@ namespace Api.ClinicaMedica.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<CitasMedicas>> GetCitasMedicas(string id)
         {
-            var citasMedicas = await _context.CitasMedicas.Include(c => c.Paciente).Include(c => c.Medico).Include(c => c.Servicio)
+            var citasMedicas = await _context.CitasMedicas.Include(c => c.Paciente)
                                 .Include(c => c.DetallesServicios).FirstOrDefaultAsync(c => c.IdCitas == id);
 
             if (citasMedicas == null)
@@ -62,9 +62,7 @@ namespace Api.ClinicaMedica.Controllers
             try
             {
                 citaM.IdCitas = citasMedicas.IdCitas;
-                citaM.IdMedico = citasMedicas.IdMedico;
                 citaM.IdPaciente = citasMedicas.IdPaciente;
-                citaM.IdServicio = citasMedicas.IdServicio;
                 citaM.FechaConsulta = citasMedicas.FechaConsulta;
                 citaM.HoraConsulta = citasMedicas.HoraConsulta;
                 citaM.MontoTotal = citasMedicas.MontoTotal;

@@ -233,17 +233,7 @@ namespace Api.ClinicaMedica.AccesoDatos
                       .WithMany()
                       .HasForeignKey(c => c.IdPaciente)
                       .OnDelete(DeleteBehavior.Restrict);
-
-                entity.HasOne(c => c.Medico)
-                      .WithMany()
-                        .HasForeignKey(c => c.IdMedico)
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                entity.HasOne(c => c.Servicio)
-                      .WithMany()
-                      .HasForeignKey(c => c.IdServicio)
-                      .OnDelete(DeleteBehavior.Restrict);
-
+                               
                 entity.HasMany(c => c.DetallesServicios)
                       .WithOne(ds => ds.CitaMedica)
                       .HasForeignKey(ds => ds.IdCitas)
@@ -270,6 +260,11 @@ namespace Api.ClinicaMedica.AccesoDatos
                       .WithMany()
                       .HasForeignKey(ds => ds.IdServicio)
                       .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(d => d.Medico)
+                        .WithMany()
+                        .HasForeignKey(d => d.IdMedico)
+                        .OnDelete(DeleteBehavior.Restrict);
             });
 
             modelBuilder.Entity<PaqueteServicio>()

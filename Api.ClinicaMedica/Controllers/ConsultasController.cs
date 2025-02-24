@@ -41,7 +41,8 @@ namespace Api.ClinicaMedica.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Consultas>> GetConsultas(string id)
         {
-            var consultas = await _context.Consultas.FindAsync(id);
+            var consultas = await _context.Consultas.Include(c => c.Servicio).Include(c => c.Paciente)
+                        .Include(c => c.Paquete).Include(c => c.Medico).FirstOrDefaultAsync(c => c.IdConsulta == id);
 
             if (consultas == null)
             {

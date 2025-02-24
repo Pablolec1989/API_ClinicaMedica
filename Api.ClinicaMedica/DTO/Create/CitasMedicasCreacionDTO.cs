@@ -8,12 +8,7 @@ namespace Api.ClinicaMedica.DTO.Create
         [Required]
         public string IdCitas { get; set; }
         [Required]
-        public string IdMedico { get; set; }
-        [Required]
         public string IdPaciente { get; set; }
-        [Required]
-        public string IdServicio { get; set; }
-        //public string IdPaquete { get; set; }
         public DateTime? FechaConsulta { get; set; }
         public DateTime? HoraConsulta { get; set; }
         public decimal MontoTotal { get; set; }

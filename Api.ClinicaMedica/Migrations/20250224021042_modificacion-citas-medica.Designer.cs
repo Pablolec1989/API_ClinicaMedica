@@ -4,6 +4,7 @@ using Api.ClinicaMedica.AccesoDatos;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Api.ClinicaMedica.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250224021042_modificacion-citas-medica")]
+    partial class modificacioncitasmedica
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,7 +50,7 @@ namespace Api.ClinicaMedica.Migrations
 
                     b.HasIndex("IdPaciente");
 
-                    b.ToTable("CitasMedicas", (string)null);
+                    b.ToTable("CitasMedicas");
                 });
 
             modelBuilder.Entity("Api.ClinicaMedica.Entities.Consultas", b =>
@@ -89,7 +92,7 @@ namespace Api.ClinicaMedica.Migrations
 
                     b.HasIndex("IdServicio");
 
-                    b.ToTable("Consultas", (string)null);
+                    b.ToTable("Consultas");
                 });
 
             modelBuilder.Entity("Api.ClinicaMedica.Entities.DetalleServicios", b =>
@@ -117,7 +120,7 @@ namespace Api.ClinicaMedica.Migrations
 
                     b.HasIndex("IdServicio");
 
-                    b.ToTable("DetalleServicios", (string)null);
+                    b.ToTable("DetalleServicios");
                 });
 
             modelBuilder.Entity("Api.ClinicaMedica.Entities.Especialidades", b =>
@@ -131,7 +134,7 @@ namespace Api.ClinicaMedica.Migrations
 
                     b.HasKey("IdEspecialidad");
 
-                    b.ToTable("Especialidades", (string)null);
+                    b.ToTable("Especialidades");
                 });
 
             modelBuilder.Entity("Api.ClinicaMedica.Entities.Facturacion", b =>
@@ -159,7 +162,7 @@ namespace Api.ClinicaMedica.Migrations
 
                     b.HasIndex("IdConsulta");
 
-                    b.ToTable("Facturaciones", (string)null);
+                    b.ToTable("Facturaciones");
                 });
 
             modelBuilder.Entity("Api.ClinicaMedica.Entities.Horarios", b =>
@@ -175,7 +178,7 @@ namespace Api.ClinicaMedica.Migrations
 
                     b.HasKey("IdHorario");
 
-                    b.ToTable("Horarios", (string)null);
+                    b.ToTable("Horarios");
                 });
 
             modelBuilder.Entity("Api.ClinicaMedica.Entities.Medicos", b =>
@@ -224,7 +227,7 @@ namespace Api.ClinicaMedica.Migrations
 
                     b.HasIndex("IdEspecialidad");
 
-                    b.ToTable("Medicos", (string)null);
+                    b.ToTable("Medicos");
                 });
 
             modelBuilder.Entity("Api.ClinicaMedica.Entities.Pacientes", b =>
@@ -267,7 +270,7 @@ namespace Api.ClinicaMedica.Migrations
 
                     b.HasKey("IdPaciente");
 
-                    b.ToTable("Pacientes", (string)null);
+                    b.ToTable("Pacientes");
                 });
 
             modelBuilder.Entity("Api.ClinicaMedica.Entities.PaqueteServicio", b =>
@@ -289,7 +292,7 @@ namespace Api.ClinicaMedica.Migrations
 
                     b.HasIndex("CodigoServicio");
 
-                    b.ToTable("PaqueteServicios", (string)null);
+                    b.ToTable("PaqueteServicios");
                 });
 
             modelBuilder.Entity("Api.ClinicaMedica.Entities.Paquetes", b =>
@@ -306,7 +309,7 @@ namespace Api.ClinicaMedica.Migrations
 
                     b.HasKey("CodigoPaquete");
 
-                    b.ToTable("Paquetes", (string)null);
+                    b.ToTable("Paquetes");
                 });
 
             modelBuilder.Entity("Api.ClinicaMedica.Entities.Roles", b =>
@@ -404,7 +407,7 @@ namespace Api.ClinicaMedica.Migrations
                         .IsUnique()
                         .HasDatabaseName("UQ_Turnos_Horario_Medico_Fecha");
 
-                    b.ToTable("Turnos", (string)null);
+                    b.ToTable("Turnos");
                 });
 
             modelBuilder.Entity("Api.ClinicaMedica.Entities.Usuarios", b =>
