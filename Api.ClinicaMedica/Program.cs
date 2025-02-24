@@ -81,8 +81,9 @@ if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 }
 
 // Configuración CORS (antes de `UseRouting`)
-app.UseCors(app.Environment.IsDevelopment() || app.Environment.IsEnvironment("Testing") ? "AllowAll" : "AllowVercel");
+//app.UseCors(app.Environment.IsDevelopment() || app.Environment.IsEnvironment("Testing") ? "AllowAll" : "AllowVercel");
 
+app.UseCors("AllowAll");
 app.UseHttpsRedirection();
 app.UseRouting();
 
