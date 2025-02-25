@@ -16,8 +16,7 @@ namespace Api.ClinicaMedica.Entities
         public string IdEspecialidad { get; set; }
         public decimal? Sueldo { get; set; }
 
-        // Relaciones
-        public Especialidades Especialidad { get; set; } = null!; // Relación 1 a 1 con Especialidad
+        public Especialidades Especialidad { get; set; } = null!;
 
         public virtual ICollection<Turnos> Turnos { get; set; } = new List<Turnos>();
     }

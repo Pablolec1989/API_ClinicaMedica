@@ -39,25 +39,20 @@ namespace Api.ClinicaMedica.Controllers
             }
             try
             {
-                //Validar si el correo ya esta registrado
                 bool emailExists = await _context.Pacientes.AnyAsync(u => u.Email == pacientesCreateDTO.Email);
                 if (emailExists)
                 {
                     return BadRequest("El correo ya está registrado.");
                 }
 
-                //validar si el rol existe en la DB
                 var rol = await _context.Roles.FindAsync(pacientesCreateDTO.IdRol);
                 if (rol == null)
                 {
                     return BadRequest("El rol especificado no existe.");
                 }
 
-                //Encriptacion de la contraseña
-
                 string hashedPassword = BCrypt.Net.BCrypt.HashPassword(pacientesCreateDTO.Password);
 
-                // Crear un nuevo usuario
                 var paciente = new Pacientes
                 {
                     IdPaciente = pacientesCreateDTO.IdPaciente,
@@ -101,25 +96,20 @@ namespace Api.ClinicaMedica.Controllers
             }
             try
             {
-                //Validar si el correo ya esta registrado
                 bool emailExists = await _context.Medicos.AnyAsync(u => u.Email == medicosCreateDTO.Email);
                 if (emailExists)
                 {
                     return BadRequest("El correo ya está registrado.");
                 }
 
-                //validar si el rol existe en la DB
                 var rol = await _context.Roles.FindAsync(medicosCreateDTO.IdRol);
                 if (rol == null)
                 {
                     return BadRequest("El rol especificado no existe.");
                 }
 
-                //Encriptacion de la contraseña
-
                 string hashedPassword = BCrypt.Net.BCrypt.HashPassword(medicosCreateDTO.Password);
 
-                // Crear un nuevo usuario
                 var medico = new Medicos
                 {
                     IdMedico = medicosCreateDTO.IdMedico,
@@ -164,21 +154,17 @@ namespace Api.ClinicaMedica.Controllers
             }
             try
             {
-                //Validar si el correo ya esta registrado
                 bool emailExists = await _context.Usuarios.AnyAsync(u => u.Email == usuariosCreateDTO.Email);
                 if (emailExists)
                 {
                     return BadRequest("El correo ya está registrado.");
                 }
 
-                //validar si el rol existe en la DB
                 var rol = await _context.Roles.FindAsync(usuariosCreateDTO.IdRol);
                 if (rol == null)
                 {
                     return BadRequest("El rol especificado no existe.");
                 }
-
-                //Encriptacion de la contraseña
 
                 string hashedPassword = BCrypt.Net.BCrypt.HashPassword(usuariosCreateDTO.Password);
 
@@ -251,13 +237,11 @@ namespace Api.ClinicaMedica.Controllers
             if (usuario == null)
                 return NotFound("Usuario inexistente");
 
-            // Obtener la contraseña del objeto dinámico
             string passwordHash = (string)usuario.GetType().GetProperty("Password")?.GetValue(usuario);
 
             if (!BCrypt.Net.BCrypt.Verify(loginDTO.Password, passwordHash))
                 return Unauthorized("Contraseña incorrecta");
 
-            // Mapear usuario a RegisteredViewModel
             var usuarioViewModel = new RegisteredViewModel
             {
                 Nombre = usuario.GetType().GetProperty("Nombre")?.GetValue(usuario)?.ToString(),
@@ -276,7 +260,6 @@ namespace Api.ClinicaMedica.Controllers
                 }
             };
 
-            // Generar el token con el rol determinado
             var token = FuncionesToken.GenerarToken(usuarioViewModel, rol, _confi);
             return Ok(token);
         }

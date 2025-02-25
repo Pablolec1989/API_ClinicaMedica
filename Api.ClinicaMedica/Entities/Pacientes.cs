@@ -14,7 +14,6 @@
         public int IdRol { get; set; }
         public bool ObraSocial { get; set; }
         
-        // Relaciones
         public virtual ICollection<Turnos> Turnos { get; set; } = new List<Turnos>();
     }
 }

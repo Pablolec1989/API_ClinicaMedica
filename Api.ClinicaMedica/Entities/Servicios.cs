@@ -7,6 +7,5 @@
         public string Descripcion { get; set; }
         public decimal Precio { get; set; }
 
-        //public ICollection<CitasMedicas> CitasMedicas { get; set; } = new List<CitasMedicas>();
     }
 }

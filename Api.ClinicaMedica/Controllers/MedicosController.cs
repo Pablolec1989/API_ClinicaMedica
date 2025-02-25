@@ -94,35 +94,6 @@ namespace Api.ClinicaMedica.Controllers
             return NoContent();
         }
 
-        // POST: api/Medicos
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        //[HttpPost]
-        //public async Task<ActionResult<Medicos>> PostMedicos(MedicosCreateDTO medicosCreateDTO)
-        //{
-        //    var medicos = _mapper.Map<Medicos>(medicosCreateDTO);
-
-
-        //    //_context.Personas.Add(medicos.Persona);
-        //    _context.Medicos.Add(medicos);
-        //    try
-        //    {
-        //        await _context.SaveChangesAsync();
-        //    }
-        //    catch (DbUpdateException)
-        //    {
-        //        if (MedicosExists(medicos.IdMedico))
-        //        {
-        //            return Conflict();
-        //        }
-        //        else
-        //        {
-        //            throw;
-        //        }
-        //    }
-
-        //    return CreatedAtAction("GetMedicos", new { id = medicos.IdMedico }, medicos);
-        //}
-
         // DELETE: api/Medicos/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteMedicos(string id)

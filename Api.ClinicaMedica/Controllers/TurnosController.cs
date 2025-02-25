@@ -28,11 +28,11 @@ namespace Api.ClinicaMedica.Controllers
         public async Task<IActionResult> ObtenerTurnosDisponibles()
         {
             var turnosDisponibles = await _context.Turnos
-            .Where(t => t.Estado == "Disponible")  // Filtrar solo los turnos disponibles
+            .Where(t => t.Estado == "Disponible")  
             .Include(t => t.Horario)
             .Include(t => t.Medico)
             .OrderBy(t => t.Fecha)
-            .ThenBy(t => t.Horario.HorarioInicio)  // Ordenar por fecha y hora
+            .ThenBy(t => t.Horario.HorarioInicio)  
             .ToListAsync();
 
 
@@ -117,7 +117,6 @@ namespace Api.ClinicaMedica.Controllers
             if (horario == null)
                 return BadRequest("El horario seleccionado no es válido.");
 
-            // Validar que no exista ya un turno para el mismo médico, fecha y franja horaria
             bool turnoExistente = await _context.Turnos.AnyAsync(t => t.IdHorario == turnoDTO.IdHorario &&
                                                                       t.IdMedico == turnoDTO.IdMedico &&
                                                                       t.Fecha.Date == turnoDTO.Fecha.Date);
@@ -125,7 +124,6 @@ namespace Api.ClinicaMedica.Controllers
             if (turnoExistente)
                 return BadRequest("Ya existe un turno asignado para este médico en esa franja horaria y fecha.");
 
-            // Convertir DTO a entidad Turnos para persistir en la base de datos
             var turno = new Turnos
             {
                 IdTurno = turnoDTO.IdTurno,
@@ -137,11 +135,9 @@ namespace Api.ClinicaMedica.Controllers
                 Estado = "Disponible"
             };
 
-            // Agregar el nuevo turno a la base de datos
             _context.Turnos.Add(turno);
             await _context.SaveChangesAsync();
 
-            // Devolver el turno creado (usando DTO)
             return Ok(turnoDTO);
         }
 
@@ -150,7 +146,6 @@ namespace Api.ClinicaMedica.Controllers
         [HttpPost("reservar")]
         public async Task<IActionResult> ReservarTurno([FromBody] ReservaTurnoDTO reserva)
         {
-            // Buscar el turno con el IdTurno proporcionado
             var turno = await _context.Turnos.FirstOrDefaultAsync(t => t.IdTurno == reserva.IdTurno);
 
             if (turno == null)
@@ -159,9 +154,8 @@ namespace Api.ClinicaMedica.Controllers
             if (turno.Estado == "Ocupado")
                 return BadRequest("El turno ya está ocupado.");
 
-            // Si el turno está disponible, actualizar su estado y asignar el paciente
-            turno.Estado = "Ocupado";  // Cambiar estado a "Ocupado"
-            turno.IdPaciente = reserva.IdPaciente;  // Asignar paciente al turno
+            turno.Estado = "Ocupado"; 
+            turno.IdPaciente = reserva.IdPaciente; 
 
             _context.Turnos.Update(turno);
             await _context.SaveChangesAsync();
@@ -180,8 +174,8 @@ namespace Api.ClinicaMedica.Controllers
             if (turno.Estado == "Disponible")
                 return BadRequest("El turno ya está disponible, no necesita ser cancelado.");
 
-            turno.Estado = "Disponible"; // Volver a estado disponible
-            turno.IdPaciente = null; // Quitar la asignación del paciente
+            turno.Estado = "Disponible"; 
+            turno.IdPaciente = null; 
 
             await _context.SaveChangesAsync();
             return Ok("Turno cancelado y ahora está disponible.");
